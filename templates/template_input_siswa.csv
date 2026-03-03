@@ -1,0 +1,3 @@
+nisn,nis,nama_lengkap,jenis_kelamin,tempat_lahir,tanggal_lahir,alamat,no_telp,email,jurusan_id,kelas,rombel,rfid_uid,foto,nama_ortu,no_telp_ortu,status
+,"20240001","Nama Siswa Baru","L/P","Surabaya","2006-01-01","Alamat siswa","081234567890","email@siswa.com",1,"XII","TKJ-1","RFID-UNIK","",,"081234567890","aktif"
+,"20240002","Nama Siswa Lain","L/P","Sidoarjo","2006-02-15","Alamat siswa lain","081234567891","email.lain@siswa.com",1,"XII","TKJ-1","RFID-UNIK2","",,"081234567891","aktif"

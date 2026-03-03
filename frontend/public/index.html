@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="Sistem Absensi Lab Komputer SMK Rajasa Surabaya - Solusi IoT untuk pendataan kehadiran siswa di laboratorium komputer" />
+    <meta name="keywords" content="absensi, lab komputer, SMK Rajasa, Surabaya, IoT, ESP32-CAM" />
+    <meta name="author" content="Tim Magang TKJ SMK Rajasa Surabaya" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <title>Sistem Absensi Lab | SMK Rajasa Surabaya</title>
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f1f5f9;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading Screen */
+      .loading-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      }
+      
+      .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(255,255,255,0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      .loading-text {
+        margin-top: 20px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>Anda perlu mengaktifkan JavaScript untuk menjalankan aplikasi ini.</noscript>
+    <div id="root">
+      <div class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Memuat Sistem Absensi Lab...</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+Template Excel untuk import data siswa. Gunakan file ini sebagai format standar.
+
+CARA PENGGUNAAN:
+1. Isi data siswa sesuai kolom yang tersedia
+2. Pastikan NISN dan NIS unik (tidak boleh duplikat)
+3. RFID_UID opsional - bisa diisi nanti saat distribusi kartu
+4. Simpan file dan upload melalui menu Import Data Siswa
+
+FORMAT KOLOM:
+- nisn: Nomor Induk Siswa Nasional (10 digit)
+- nis: Nomor Induk Sekolah
+- nama_lengkap: Nama lengkap siswa
+- jenis_kelamin: L (Laki-laki) atau P (Perempuan)
+- tempat_lahir: Kota kelahiran
+- tanggal_lahir: Format YYYY-MM-DD
+- alamat: Alamat lengkap
+- no_telp: Nomor telepon (opsional)
+- email: Email siswa (opsional)
+- jurusan_id: ID jurusan (1=TKJ, 2=RPL, 3=MM, 4=BC, 5=TEI)
+- kelas: X, XI, atau XII
+- rombel: Contoh: TKJ-1, TKJ-2, dst
+- rfid_uid: UID kartu RFID (opsional)
+- nama_ortu: Nama orang tua/wali
+- no_telp_ortu: Nomor telepon orang tua
+- status: aktif/nonaktif/lulus/keluar
+
+CONTOH DATA:
+nisn,nis,nama_lengkap,jenis_kelamin,tempat_lahir,tanggal_lahir,alamat,no_telp,email,jurusan_id,kelas,rombel,rfid_uid,nama_ortu,no_telp_ortu,status
+0068234587,20210001,RACHMAD HIDAYAT,L,Surabaya,2006-10-27,"Jl. Ampel Rahmat No.22, Surabaya",081111111001,rachmad.hidayat@student.smkrajasa.sch.id,1,XII,TKJ-1,RFID-TKJ-001,Bapak Hidayat,081234567890,aktif
+0068234588,20210002,AHMAD FAUZI,L,Sidoarjo,2006-03-15,"Jl. Mawar No. 1, Sidoarjo",081111111002,ahmad.fauzi@student.smkrajasa.sch.id,1,XII,TKJ-1,RFID-TKJ-002,Bapak Fauzi,081234567891,aktif

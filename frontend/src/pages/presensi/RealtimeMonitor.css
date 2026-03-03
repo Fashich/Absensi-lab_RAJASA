@@ -1,0 +1,111 @@
+/* Realtime Monitor Styles */
+
+.realtime-monitor {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.monitor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.monitor-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+.monitor-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  background: var(--success-50);
+  border-radius: 8px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-indicator.online {
+  background: var(--success-500);
+}
+
+.monitor-status span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--success-600);
+}
+
+.monitor-content {
+  color: var(--gray-400);
+}
+
+.monitor-content i {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.monitor-content p {
+  font-size: 1rem;
+}
+
+.recent-scans {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.recent-scans h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 1rem;
+}
+
+.scan-list {
+  min-height: 200px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: var(--gray-400);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (max-width: 768px) {
+  .monitor-grid {
+    grid-template-columns: 1fr;
+  }
+}

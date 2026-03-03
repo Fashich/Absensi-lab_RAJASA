@@ -1,0 +1,22 @@
+# Logs
+logs/
+*.log
+
+# Uploads (kecuali folder kosong)
+uploads/foto/*
+!uploads/foto/.gitkeep
+uploads/scan/*
+!uploads/scan/.gitkeep
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
