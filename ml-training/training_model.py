@@ -89,6 +89,9 @@ class AbsensiAnalytics:
             ORDER BY p.tanggal DESC
         """
         
+        if self.db_connection is None or not self.db_connection.is_connected():
+            raise ValueError("Database connection is not established")
+        
         df = pd.read_sql(query, self.db_connection, params=(days,))
         return df
     
@@ -107,6 +110,9 @@ class AbsensiAnalytics:
             WHERE la.tanggal >= DATE_SUB(CURDATE(), INTERVAL %s DAY)
             ORDER BY la.tanggal DESC
         """
+        
+        if self.db_connection is None or not self.db_connection.is_connected():
+            raise ValueError("Database connection is not established")
         
         df = pd.read_sql(query, self.db_connection, params=(days,))
         return df
@@ -173,11 +179,18 @@ class AbsensiAnalytics:
             HAVING total_presensi >= 5
         """
         
+        if self.db_connection is None:
+            raise ValueError("Database connection is not established")
+        
         df = pd.read_sql(query, self.db_connection)
         
         if len(df) == 0:
             print("Data tidak cukup untuk clustering")
             return None
+            
+        # Check if database connection is still active
+        if self.db_connection is None:
+            raise ValueError("Database connection is not established")
         
         # Siapkan fitur
         features = ['total_hadir', 'total_terlambat', 'total_sakit', 'total_izin', 
@@ -353,6 +366,10 @@ class AbsensiAnalytics:
         print("\n" + "="*60)
         print("GENERATE LAPORAN ANALISIS")
         print("="*60)
+        
+        if self.db_connection is None or not self.db_connection.is_connected():
+            print("Database connection is not established")
+            return None
         
         # 1. Statistik Kehadiran
         query_stats = """

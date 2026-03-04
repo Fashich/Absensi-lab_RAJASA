@@ -174,25 +174,23 @@ class BarcodeScannerTrainer:
         """
         Validasi NISN dengan database
         """
-        if not self.db_connection:
+        if not self.db_connection or not self.db_connection.is_connected():
             logger.error("Tidak ada koneksi database")
             return None
         
         try:
-            cursor = self.db_connection.cursor(dictionary=True)
-            query = """
-                SELECT s.*, j.nama_jurusan, j.kode_jurusan, r.nama_ruangan
-                FROM siswa s
-                LEFT JOIN jurusan j ON s.jurusan_id = j.id
-                LEFT JOIN ruangan r ON s.jurusan_id = r.jurusan_id
-                WHERE s.nisn = %s AND s.status = 'aktif'
-                LIMIT 1
-            """
-            cursor.execute(query, (nisn,))
-            result = cursor.fetchone()
-            cursor.close()
-            
-            return result
+            with self.db_connection.cursor(dictionary=True) as cursor:
+                query = """
+                    SELECT s.*, j.nama_jurusan, j.kode_jurusan, r.nama_ruangan
+                    FROM siswa s
+                    LEFT JOIN jurusan j ON s.jurusan_id = j.id
+                    LEFT JOIN ruangan r ON s.jurusan_id = r.jurusan_id
+                    WHERE s.nisn = %s AND s.status = 'aktif'
+                    LIMIT 1
+                """
+                cursor.execute(query, (nisn,))
+                result = cursor.fetchone()
+                return result
             
         except Exception as e:
             logger.error(f"Error validasi database: {e}")
@@ -255,44 +253,46 @@ class BarcodeScannerTrainer:
         """
         Generate data latih berdasarkan data siswa yang ada di database
         """
+        if not self.db_connection or not self.db_connection.is_connected():
+            logger.error("Tidak ada koneksi database")
+            return np.array([]), np.array([])
+            
         try:
-            cursor = self.db_connection.cursor(dictionary=True)
-            
-            # Ambil data siswa
-            query = """
-                SELECT nisn, nama_lengkap, kelas, jurusan_id, rombel
-                FROM siswa
-                WHERE status = 'aktif'
-            """
-            cursor.execute(query)
-            students = cursor.fetchall()
-            cursor.close()
-            
-            # Generate data simulasi barcode
-            training_data = []
-            labels = []
-            
-            for student in students:
-                # Format data menjadi barcode (simulasi)
-                barcode_sim = f"{student['nisn']}|{student['nama_lengkap']}|{student['kelas']}|{student['jurusan_id']}|{student['rombel']}"
+            with self.db_connection.cursor(dictionary=True) as cursor:
+                # Ambil data siswa
+                query = """
+                    SELECT nisn, nama_lengkap, kelas, jurusan_id, rombel
+                    FROM siswa
+                    WHERE status = 'aktif'
+                """
+                cursor.execute(query)
+                students = cursor.fetchall()
                 
-                # Ekstrak informasi
-                extracted = self.extract_student_data_from_barcode(barcode_sim)
+                # Generate data simulasi barcode
+                training_data = []
+                labels = []
                 
-                # Buat fitur untuk training
-                feature = [
-                    len(student['nisn']) if student['nisn'] else 0,
-                    len(student['nama_lengkap']) if student['nama_lengkap'] else 0,
-                    1 if student['kelas'] else 0,
-                    student['jurusan_id'] if student['jurusan_id'] else 0,
-                    len(student['rombel']) if student['rombel'] else 0
-                ]
+                for student in students:
+                    # Format data menjadi barcode (simulasi)
+                    barcode_sim = f"{student['nisn']}|{student['nama_lengkap']}|{student['kelas']}|{student['jurusan_id']}|{student['rombel']}"
+                    
+                    # Ekstrak informasi
+                    extracted = self.extract_student_data_from_barcode(barcode_sim)
+                    
+                    # Buat fitur untuk training
+                    feature = [
+                        len(student['nisn']) if student['nisn'] else 0,
+                        len(student['nama_lengkap']) if student['nama_lengkap'] else 0,
+                        1 if student['kelas'] else 0,
+                        student['jurusan_id'] if student['jurusan_id'] else 0,
+                        len(student['rombel']) if student['rombel'] else 0
+                    ]
+                    
+                    training_data.append(feature)
+                    labels.append(1 if extracted.get('nisn') == student['nisn'] else 0)
                 
-                training_data.append(feature)
-                labels.append(1 if extracted.get('nisn') == student['nisn'] else 0)
-            
-            return np.array(training_data), np.array(labels)
-            
+                return np.array(training_data), np.array(labels)
+                
         except Exception as e:
             logger.error(f"Error generating training data: {e}")
             return np.array([]), np.array([])

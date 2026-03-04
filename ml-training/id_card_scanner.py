@@ -357,6 +357,14 @@ class IDCardScanner:
         
         siswa = data['siswa_data']
         
+        # Pastikan koneksi database tersedia
+        if not self.db_connection or not self.db_connection.is_connected():
+            return {
+                'success': False,
+                'error': 'Tidak ada koneksi database yang aktif',
+                'siswa': siswa
+            }
+        
         # Catat presensi
         try:
             cursor = self.db_connection.cursor()
