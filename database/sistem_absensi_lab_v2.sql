@@ -1,3 +1,32 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 04 Mar 2026 pada 22.24
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `sistem_absensi_lab`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `admin_activities`
+--
+
 -- =====================================================
 -- SISTEM ABSENSI LAB KOMPUTER SMK RAJASA SURABAYA
 -- Database Schema & Dummy Data - Versi 2
@@ -21,36 +50,16 @@ CREATE DATABASE IF NOT EXISTS sistem_absensi_lab
 -- Pilih database
 USE sistem_absensi_lab;
 
--- =====================================================
--- TABEL JURUSAN
--- =====================================================
-CREATE TABLE IF NOT EXISTS jurusan (
-    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    kode_jurusan VARCHAR(10) NOT NULL UNIQUE COMMENT 'Kode unik jurusan, ex: TKJ, RPL, MM',
-    nama_jurusan VARCHAR(100) NOT NULL COMMENT 'Nama lengkap jurusan',
-    singkatan VARCHAR(10) NOT NULL COMMENT 'Singkatan jurusan',
-    ketua_jurusan VARCHAR(100) DEFAULT NULL COMMENT 'Nama ketua jurusan',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    status ENUM('aktif', 'nonaktif') DEFAULT 'aktif'
+CREATE TABLE `admin_activities` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `activity_type` varchar(50) NOT NULL COMMENT 'Jenis aktivitas (login, logout, view_data, update_data, etc.)',
+  `activity_description` text DEFAULT NULL COMMENT 'Deskripsi detail aktivitas',
+  `ip_address` varchar(45) DEFAULT NULL COMMENT 'IP address pengguna',
+  `user_agent` text DEFAULT NULL COMMENT 'Browser/Device info',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- =====================================================
--- TABEL RUANGAN/LAB KOMPUTER
--- =====================================================
-CREATE TABLE IF NOT EXISTS ruangan (
-    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    kode_ruangan VARCHAR(20) NOT NULL UNIQUE COMMENT 'Kode ruangan, ex: LAB-TKJ-01',
-    nama_ruangan VARCHAR(100) NOT NULL COMMENT 'Nama ruangan',
-    jurusan_id INT(11) UNSIGNED NOT NULL,
-    kapasitas INT(11) DEFAULT 30 COMMENT 'Kapasitas maksimum siswa',
-    lokasi VARCHAR(100) DEFAULT NULL COMMENT 'Lokasi/detail ruangan',
-    esp32_cam_id VARCHAR(50) DEFAULT NULL COMMENT 'ID unik ESP32-CAM di ruangan ini',
-    esp32_cam_ip VARCHAR(20) DEFAULT NULL COMMENT 'IP address ESP32-CAM',
-    status ENUM('aktif', 'nonaktif', 'maintenance') DEFAULT 'aktif',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (jurusan_id) REFERENCES jurusan(id) ON DELETE CASCADE ON UPDATE CASCADE
 -- --------------------------------------------------------
 
 --
