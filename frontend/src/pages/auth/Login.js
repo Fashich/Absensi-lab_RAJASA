@@ -129,6 +129,11 @@ const Login = () => {
         </button>
       </form>
 
+      {/* Bagian tambahan untuk tautan signup */}
+      <div className="login-signup-link">
+        <p>Belum punya akun? <a href="/signup">Daftar di sini</a></p>
+      </div>
+
       <div className="login-demo">
         <p>Akun Demo:</p>
         <div className="demo-accounts">

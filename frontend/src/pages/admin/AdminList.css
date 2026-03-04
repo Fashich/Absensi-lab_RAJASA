@@ -1,15 +1,242 @@
-/* Admin List Styles */
+.header-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+}
+
+.time-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.time-display {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.date-display {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  margin: 0;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  min-width: 150px;
+  text-align: center;
+}
+
+.activity-log-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.activity-log-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activity-log-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.activity-user {
+  font-weight: bold;
+  color: #2c3e50;
+  width: 150px;
+  flex-shrink: 0;
+}
+
+.activity-desc {
+  flex-grow: 1;
+  color: #7f8c8d;
+  padding: 0 10px;
+  text-align: left;
+}
+
+.activity-time {
+  color: #95a5a6;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  width: 100px;
+  text-align: right;
+}
 
 .admin-list {
-  animation: fadeIn 0.3s ease-out;
+  padding: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  margin: 0;
+  color: #2c3e50;
+}
+
+.page-subtitle {
+  margin: 5px 0 0 0;
+  color: #7f8c8d;
+}
+
+.table-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+}
+
+.table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .badge-primary {
-  background: var(--primary-100);
-  color: var(--primary-700);
+  background-color: #3498db;
+  color: white;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.badge-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.badge-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-error {
+  background-color: #dc3545;
+  color: white;
+}
+
+.badge-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.empty-table {
+  text-align: center;
+  padding: 40px 20px;
+  color: #7f8c8d;
+}
+
+.empty-table i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #bdc3c7;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.btn-primary {
+  background-color: #3498db;
+}
+
+@media (max-width: 992px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .activity-time {
+    width: auto;
+    text-align: left;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
 }

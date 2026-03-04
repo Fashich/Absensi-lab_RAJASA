@@ -76,6 +76,18 @@
   border-bottom: 1px solid #eee;
 }
 
+.profil-avatar-upload {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profil-avatar-upload.drag-active {
+  border: 2px dashed #0ea5e9;
+  background-color: rgba(14, 165, 233, 0.1);
+  border-radius: 50%;
+}
+
 .profil-avatar {
   width: 80px;
   height: 80px;
@@ -88,6 +100,77 @@
   font-size: 1.75rem;
   font-weight: 600;
   flex-shrink: 0;
+}
+
+.profil-avatar-initial {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.profil-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.upload-label {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #0ea5e9;
+  border-radius: 50%;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  z-index: 2;
+}
+
+.upload-button {
+  color: white;
+  font-size: 0.8rem;
+}
+
+.drag-drop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.profil-avatar-upload:hover .drag-drop-overlay,
+.profil-avatar-upload.drag-active .drag-drop-overlay {
+  opacity: 1;
+}
+
+.drag-drop-overlay span {
+  color: white;
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 0.5rem;
+  pointer-events: none;
 }
 
 .profil-basic-info h2 {

@@ -1,22 +1,11 @@
-# Logs
-logs/
-*.log
-
-# Uploads (kecuali folder kosong)
-uploads/foto/*
-!uploads/foto/.gitkeep
-uploads/scan/*
-!uploads/scan/.gitkeep
-
-# Environment
+# File dan direktori yang diabaikan oleh Git
+node_modules/
 .env
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
+config/database.php
+*.log
+uploads/foto/scan/
+uploads/foto/siswa/
+*.tmp
 Thumbs.db
+.DS_Store
+reset_password.php

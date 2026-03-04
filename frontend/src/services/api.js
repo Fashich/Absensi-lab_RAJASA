@@ -77,6 +77,11 @@ export const authAPI = {
   logout: () => api.post('/api/auth/logout.php'),
   updateProfile: (data) => api.put('/api/auth/update_profile.php', data),
   changePassword: (data) => api.post('/api/auth/change_password.php', data),
+  uploadFotoProfil: (data) => api.post('/api/auth/upload_foto_profil.php', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    }
+  }),
 };
 
 // Siswa API
@@ -115,9 +120,13 @@ export const adminAPI = {
   getAll: () => api.get('/api/admin/get_all.php'),
   create: (data) => api.post('/api/admin/create.php', data),
   getLogAkses: (params = {}) => api.get('/api/admin/log_akses.php', { params }),
+  getActivityLogs: (params = {}) => api.get('/api/admin/activity_logs.php', { params }), // New endpoint
   getNotifikasi: () => api.get('/api/admin/notifikasi.php'),
+  getNotificationHistory: () => api.get('/api/admin/notifikasi.php?history=true&limit=50'),
   markNotifikasiRead: (id = null) => api.put('/api/admin/notifikasi.php', { id }),
   markAllNotifikasiRead: () => api.put('/api/admin/notifikasi.php', { mark_all: true }),
+  deleteNotifikasi: (id) => api.delete(`/api/admin/notifikasi.php?id=${id}`),
+  clearAllNotifikasi: () => api.delete('/api/admin/notifikasi.php?clear=all'),
 };
 
 // Export API

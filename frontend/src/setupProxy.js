@@ -11,10 +11,12 @@ module.exports = function(app) {
       },
       // Menambahkan konfigurasi middleware untuk menghindari peringatan
       onProxyReq: (proxyReq, req, res) => {
-        // Optional: Menangani permintaan proxy
+        // Menambahkan header CORS ke permintaan
+        proxyReq.setHeader('Origin', 'http://localhost:3000');
       },
       onProxyRes: (proxyRes, req, res) => {
-        // Optional: Menangani respons proxy
+        // Menyalin header CORS dari target ke respons
+        res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       },
     })
   );

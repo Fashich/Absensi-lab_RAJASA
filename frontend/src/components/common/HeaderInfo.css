@@ -1,0 +1,131 @@
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem 0;
+  background: white;
+  /* Adjust left padding to account for sidebar */
+  padding-left: 0;
+  transition: padding-left 0.3s ease;
+}
+
+.header-info.collapsed {
+  padding-left: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.page-title h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.network-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background-color: #10b981; /* green */
+}
+
+.status-dot.offline {
+  background-color: #9ca3af; /* gray */
+}
+
+.status-dot.limited-connectivity {
+  background-color: #f59e0b; /* amber/orange */
+}
+
+.status-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.date-time-info .date,
+.date-time-info .time {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-time-info i {
+  color: #666;
+}
+
+.search-bar {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.search-bar input {
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 1.5rem;
+  font-size: 0.9rem;
+  width: 300px;
+  transition: all 0.3s;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+  width: 350px;
+}
+
+.search-bar i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .header-info {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    padding-left: 0;
+  }
+  
+  .header-left {
+    flex-wrap: nowrap;
+    min-width: auto;
+  }
+  
+  .header-right {
+    flex-shrink: 0;
+  }
+}

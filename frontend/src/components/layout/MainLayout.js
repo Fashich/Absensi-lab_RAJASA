@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { adminAPI } from '../../services/api';
+import HeaderInfo from '../../components/common/HeaderInfo';
 import './MainLayout.css';
 
 const MainLayout = () => {
@@ -53,6 +54,34 @@ const MainLayout = () => {
       }
     } catch (error) {
       console.error('Error marking notification as read:', error);
+    }
+  };
+
+  const deleteNotification = async (id) => {
+    try {
+      // Delete notification from backend
+      await adminAPI.deleteNotifikasi(id);
+      
+      // Update local state
+      setNotifications(prev => prev.filter(notif => notif.id !== id));
+      if (notifications.find(notif => notif.id === id && !notif.is_read)) {
+        setUnreadCount(prev => Math.max(0, prev - 1));
+      }
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
+  };
+
+  const clearAllNotifications = async () => {
+    try {
+      // Clear all notifications from backend
+      await adminAPI.clearAllNotifikasi();
+      
+      // Update local state
+      setNotifications([]);
+      setUnreadCount(0);
+    } catch (error) {
+      console.error('Error clearing all notifications:', error);
     }
   };
 
@@ -116,6 +145,7 @@ const MainLayout = () => {
         { path: '/laporan/harian', icon: 'fas fa-calendar-day', label: 'Laporan Harian' },
         { path: '/laporan/bulanan', icon: 'fas fa-calendar-alt', label: 'Laporan Bulanan' },
         { path: '/laporan/log-akses', icon: 'fas fa-exclamation-triangle', label: 'Log Akses' },
+        { path: '/laporan/log-notifikasi', icon: 'fas fa-bell', label: 'Riwayat Notifikasi' },
       ]
     },
   ];
@@ -207,6 +237,8 @@ const MainLayout = () => {
             <i className="fas fa-search"></i>
             <input type="text" placeholder="Cari..." />
           </div>
+          
+          <HeaderInfo isSidebarCollapsed={sidebarOpen} />
 
           <div className="header-actions">
             <div className="notification-dropdown">
@@ -226,30 +258,41 @@ const MainLayout = () => {
                   <div className="notification-list">
                     {notifications.length > 0 ? (
                       notifications.slice(0, 5).map((notif, index) => (
-                        <a
-                          key={notif.id || index}
-                          href={notif.link || '#'}
-                          className={`notification-item ${!notif.is_read ? 'unread' : ''}`}
-                          onClick={(e) => {
-                            if (!notif.is_read) {
-                              markAsRead(notif.id);
-                              e.preventDefault(); // Prevent navigation if notif has no link
-                            }
-                          }}
-                        >
-                          <div className={`notification-icon ${notif.type === 'error' ? 'bg-error' :
-                                            notif.type === 'warning' ? 'bg-warning' :
-                                            notif.type === 'success' ? 'bg-success' : 'bg-primary'}`}>
-                            <i className={`fas ${notif.icon || 'fa-bell'}`}></i>
-                          </div>
-                          <div className="notification-content">
-                            <h5>{notif.title || 'Judul Notifikasi'}</h5>
-                            <p>{notif.message || 'Deskripsi notifikasi'}</p>
-                            <span className="notification-time">
-                              {new Date(notif.created_at || new Date()).toLocaleString('id-ID')}
-                            </span>
-                          </div>
-                        </a>
+                        <div key={notif.id || index} className="notification-item-wrapper">
+                          <a
+                            href={notif.link || '#'}
+                            className={`notification-item ${!notif.is_read ? 'unread' : ''}`}
+                            onClick={(e) => {
+                              if (!notif.is_read) {
+                                markAsRead(notif.id);
+                                e.preventDefault(); // Prevent navigation if notif has no link
+                              }
+                            }}
+                          >
+                            <div className={`notification-icon ${notif.type === 'error' ? 'bg-error' :
+                                              notif.type === 'warning' ? 'bg-warning' :
+                                              notif.type === 'success' ? 'bg-success' : 'bg-primary'}`}>
+                              <i className={`fas ${notif.icon || 'fa-bell'}`}></i>
+                            </div>
+                            <div className="notification-content">
+                              <h5>{notif.title || 'Judul Notifikasi'}</h5>
+                              <p>{notif.message || 'Deskripsi notifikasi'}</p>
+                              <span className="notification-time">
+                                {new Date(notif.created_at || new Date()).toLocaleString('id-ID')}
+                              </span>
+                            </div>
+                          </a>
+                          <button 
+                            className="delete-notification-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteNotification(notif.id);
+                            }}
+                            title="Hapus notifikasi"
+                          >
+                            <i className="fas fa-times"></i>
+                          </button>
+                        </div>
                       ))
                     ) : (
                       <div className="empty-notifications">
@@ -260,17 +303,22 @@ const MainLayout = () => {
                   </div>
                   <div className="dropdown-footer">
                     {notifications.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          markAsRead();
-                        }}
-                        className="mark-all-read-btn"
-                      >
-                        Tandai semua sudah dibaca
-                      </button>
+                      <>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            clearAllNotifications();
+                          }}
+                          className="clear-all-btn"
+                        >
+                          Hapus Semua
+                        </button>
+                        <a href="/laporan/log-notifikasi">
+                          <i className="fas fa-history"></i> Riwayat
+                        </a>
+                      </>
                     )}
-                    <a href="/laporan/log-akses">Lihat Semua</a>
                   </div>
                 </div>
               )}
@@ -279,45 +327,53 @@ const MainLayout = () => {
 
           <div className="user-menu" onClick={toggleUserMenu}>
             <div className="user-avatar">
-              {user?.nama_lengkap?.charAt(0).toUpperCase()}
+              {user?.foto_profile ? (
+                <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/foto_profil/${user.foto_profile}`} alt="Foto Profil" />
+              ) : (
+                <span>{user?.nama_lengkap?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || '?'}</span>
+              )}
             </div>
             <div className="user-info">
-              <span className="user-name">{user?.nama_lengkap}</span>
-              <span className="user-role">
-                {user?.role === 'admin_operator' ? 'Admin Operator' : 'Admin Jurusan'}
-              </span>
+              <div className="user-name">{user?.nama_lengkap || user?.username}</div>
+              <div className="user-role">{user?.role === 'admin_operator' ? 'Admin Operator' : 'Admin Jurusan'}</div>
             </div>
             <div className="user-arrow">
-              <i className={`fas ${userMenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+              <i className="fas fa-chevron-down"></i>
             </div>
-            
-            {userMenuOpen && (
-              <div className="dropdown-menu user-menu-dropdown">
-                <div className="user-profile-info">
-                  <div className="user-avatar-large">
-                    {user?.nama_lengkap?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="user-details">
-                    <h4>{user?.nama_lengkap}</h4>
-                    <p>{user?.role === 'admin_operator' ? 'Admin Operator' : 'Admin Jurusan'}</p>
-                  </div>
+          </div>
+
+          {/* User Menu Dropdown */}
+          {userMenuOpen && (
+            <div className="user-menu-dropdown">
+              <div className="user-profile-info">
+                <div className="user-avatar-large">
+                  {user?.foto_profile ? (
+                    <img src={`${process.env.REACT_APP_API_BASE_URL}/uploads/foto_profil/${user.foto_profile}`} alt="Foto Profil" />
+                  ) : (
+                    <span>{user?.nama_lengkap?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || '?'}</span>
+                  )}
                 </div>
-                <div className="dropdown-divider"></div>
-                <NavLink to="/profil" className="dropdown-item">
-                  <i className="fas fa-user"></i>
-                  Profil Saya
-                </NavLink>
-                <NavLink to="/admin/pengaturan" className="dropdown-item">
-                  <i className="fas fa-cog"></i>
-                  Pengaturan
-                </NavLink>
-                <button className="dropdown-item" onClick={handleLogout}>
+                <div className="user-details">
+                  <h4>{user?.nama_lengkap || user?.username}</h4>
+                  <p>{user?.role === 'admin_operator' ? 'Admin Operator' : 'Admin Jurusan'}</p>
+                </div>
+              </div>
+              
+              <div className="dropdown-divider"></div>
+              
+              <NavLink to="/profil" className="dropdown-item">
+                <i className="fas fa-user"></i>
+                <span>Profil Saya</span>
+              </NavLink>
+              
+              <div className="dropdown-item">
+                <button onClick={handleLogout}>
                   <i className="fas fa-sign-out-alt"></i>
-                  Keluar
+                  <span>Keluar</span>
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </header>
 
         {/* Page Content */}

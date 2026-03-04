@@ -40,12 +40,12 @@ $result = $auth->login($username, $password);
 if ($result) {
     // Log aktivitas
     logActivity("User {$username} berhasil login", 'SUCCESS');
-    
+
     jsonResponse(true, 'Login berhasil', $result);
 } else {
     // Log aktivitas
     logActivity("Percobaan login gagal untuk username: {$username}", 'WARNING');
-    
+
     jsonResponse(false, 'Username atau password salah', null, 401);
 }
 ?>

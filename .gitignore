@@ -72,6 +72,7 @@ composer.lock
 backend/uploads/ # Image uploads folder (but keep the directory structure)
 backend/config/database.php.bak # Backup of database config
 backend/storage/logs/*
+backend/reset_password.php*
 
 # Frontend specific ignores
 frontend/node_modules/

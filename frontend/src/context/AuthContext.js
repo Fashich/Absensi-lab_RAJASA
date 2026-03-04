@@ -49,18 +49,21 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.data.success) {
-        const { user, token } = response.data.data;
+        const { user: userData, token: newToken } = response.data.data;
         
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', newToken);
+        localStorage.setItem('user', JSON.stringify(userData));
         
-        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
         
-        setUser(user);
-        setToken(token);
+        setUser({
+          ...userData,
+          foto_profile: userData.foto_profile // Ensure foto_profile is included
+        });
+        setToken(newToken);
         setIsAuthenticated(true);
         
-        toast.success('Login berhasil! Selamat datang, ' + user.nama_lengkap);
+        toast.success('Login berhasil! Selamat datang, ' + userData.nama_lengkap);
         return { success: true };
       } else {
         toast.error(response.data.message || 'Login gagal');

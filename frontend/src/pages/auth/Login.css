@@ -220,3 +220,29 @@
     align-items: flex-start;
   }
 }
+
+/* Signup Link */
+.login-signup-link {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #f1f5f9;
+  border-radius: 8px;
+}
+
+.login-signup-link p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.login-signup-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+.login-signup-link a:hover {
+  text-decoration: underline;
+}
