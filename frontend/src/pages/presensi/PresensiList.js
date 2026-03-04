@@ -68,7 +68,9 @@ const PresensiList = () => {
     try {
       const response = await siswaAPI.getAll();
       if (response.data.success) {
-        setSiswa(response.data.data);
+        // For students, the API returns data in a different format: { success, message, data: { data[], pagination{} } }
+        // So we need to access response.data.data.data to get the actual array of students
+        setSiswa(response.data.data.data || []);
       }
     } catch (error) {
       console.error('Error fetching siswa:', error);

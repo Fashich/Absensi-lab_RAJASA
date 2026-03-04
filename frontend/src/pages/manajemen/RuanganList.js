@@ -8,6 +8,7 @@ const RuanganList = () => {
   const [jurusan, setJurusan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingRoom, setEditingRoom] = useState(null);
   const [formData, setFormData] = useState({
     kode_ruangan: '',
     nama_ruangan: '',
@@ -68,6 +69,39 @@ const RuanganList = () => {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      kode_ruangan: '',
+      nama_ruangan: '',
+      kapasitas: '',
+      jurusan_id: '',
+      fasilitas: '',
+      status: 'aktif',
+      lokasi: '',
+      esp32_cam_id: '',
+      esp32_cam_ip: ''
+    });
+    setErrors({});
+    setMessage('');
+  };
+
+  const handleEditClick = (room) => {
+    setEditingRoom(room);
+    setFormData({
+      id: room.id,
+      kode_ruangan: room.kode_ruangan,
+      nama_ruangan: room.nama_ruangan,
+      kapasitas: room.kapasitas,
+      jurusan_id: room.jurusan_id,
+      fasilitas: room.fasilitas || '',
+      status: room.status,
+      lokasi: room.lokasi || '',
+      esp32_cam_id: room.esp32_cam_id || '',
+      esp32_cam_ip: room.esp32_cam_ip || ''
+    });
+    setShowAddForm(true);
+  };
+
   const validateForm = () => {
     const newErrors = {};
     
@@ -100,21 +134,20 @@ const RuanganList = () => {
     
     try {
       setLoading(true);
-      const response = await ruanganAPI.create(formData);
+      
+      let response;
+      if (editingRoom) {
+        // Update existing room
+        response = await ruanganAPI.update(formData);
+      } else {
+        // Create new room
+        response = await ruanganAPI.create(formData);
+      }
       
       if (response.data.success) {
-        setMessage('Ruangan berhasil ditambahkan');
-        setFormData({
-          kode_ruangan: '',
-          nama_ruangan: '',
-          kapasitas: '',
-          jurusan_id: '',
-          fasilitas: '',
-          status: 'aktif',
-          lokasi: '',
-          esp32_cam_id: '',
-          esp32_cam_ip: ''
-        });
+        setMessage(editingRoom ? 'Ruangan berhasil diperbarui' : 'Ruangan berhasil ditambahkan');
+        resetForm();
+        setEditingRoom(null);
         setShowAddForm(false);
         
         // Refresh data
@@ -124,14 +157,20 @@ const RuanganList = () => {
           setMessage('');
         }, 3000);
       } else {
-        setErrors({ submit: response.data.message || 'Gagal menambahkan ruangan' });
+        setErrors({ submit: response.data.message || (editingRoom ? 'Gagal memperbarui ruangan' : 'Gagal menambahkan ruangan') });
       }
     } catch (error) {
-      console.error('Error adding ruangan:', error);
-      setErrors({ submit: error.response?.data?.message || 'Terjadi kesalahan saat menambahkan ruangan' });
+      console.error('Error processing ruangan:', error);
+      setErrors({ submit: error.response?.data?.message || (editingRoom ? 'Terjadi kesalahan saat memperbarui ruangan' : 'Terjadi kesalahan saat menambahkan ruangan') });
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    setShowAddForm(false);
+    setEditingRoom(null);
+    resetForm();
   };
 
   const getStatusClass = (status) => {
@@ -163,9 +202,13 @@ const RuanganList = () => {
           <h1 className="page-title">Data Ruangan</h1>
           <p className="page-subtitle">Daftar ruangan/laboratorium komputer</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowAddForm(!showAddForm)}>
+        <button className="btn btn-primary" onClick={() => {
+          resetForm();
+          setEditingRoom(null);
+          setShowAddForm(!showAddForm);
+        }}>
           <i className="fas fa-plus"></i>
-          Tambah Ruangan
+          {editingRoom ? 'Batal' : 'Tambah Ruangan'}
         </button>
       </div>
 
@@ -178,7 +221,7 @@ const RuanganList = () => {
       {showAddForm && (
         <div className="add-form-container">
           <form className="add-ruangan-form" onSubmit={handleSubmit}>
-            <h3>Tambah Ruangan Baru</h3>
+            <h3>{editingRoom ? 'Edit Ruangan' : 'Tambah Ruangan Baru'}</h3>
             
             <div className="form-row">
               <div className="form-group">
@@ -316,9 +359,9 @@ const RuanganList = () => {
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
                 <i className="fas fa-save"></i>
-                Simpan Ruangan
+                {editingRoom ? 'Simpan Perubahan' : 'Simpan Ruangan'}
               </button>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowAddForm(false)}>
+              <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                 Batal
               </button>
             </div>
@@ -361,6 +404,17 @@ const RuanganList = () => {
               <div className="esp32-ip">
                 {r.esp32_cam_ip || '-'}
               </div>
+            </div>
+            
+            <div className="ruangan-actions">
+              <button 
+                className="btn btn-sm btn-outline" 
+                onClick={() => handleEditClick(r)}
+                title="Edit ruangan"
+              >
+                <i className="fas fa-edit"></i>
+                Edit
+              </button>
             </div>
           </div>
         ))}

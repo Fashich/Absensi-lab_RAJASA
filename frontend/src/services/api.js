@@ -97,12 +97,14 @@ export const siswaAPI = {
 export const jurusanAPI = {
   getAll: () => api.get('/api/jurusan/get_all.php'),
   create: (data) => api.post('/api/jurusan/create.php', data),
+  update: (data) => api.put('/api/jurusan/update.php', data),
 };
 
 // Ruangan API
 export const ruanganAPI = {
   getAll: (params = {}) => api.get('/api/ruangan/get_all.php', { params }),
   create: (data) => api.post('/api/ruangan/create.php', data),
+  update: (data) => api.put('/api/ruangan/update.php', data),
 };
 
 // Presensi API

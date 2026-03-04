@@ -7,10 +7,12 @@ const JurusanList = () => {
   const [jurusan, setJurusan] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingJurusan, setEditingJurusan] = useState(null);
   const [formData, setFormData] = useState({
     nama_jurusan: '',
     kode_jurusan: '',
     singkatan: '',
+    ketua_jurusan: '',
     status: 'aktif'
   });
   const [errors, setErrors] = useState({});
@@ -49,6 +51,36 @@ const JurusanList = () => {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      nama_jurusan: '',
+      kode_jurusan: '',
+      singkatan: '',
+      ketua_jurusan: '',
+      status: 'aktif'
+    });
+    setErrors({});
+  };
+
+  const handleEditClick = (dept) => {
+    setEditingJurusan(dept);
+    setFormData({
+      id: dept.id,
+      nama_jurusan: dept.nama_jurusan,
+      kode_jurusan: dept.kode_jurusan,
+      singkatan: dept.singkatan,
+      ketua_jurusan: dept.ketua_jurusan || '',
+      status: dept.status
+    });
+    setShowForm(true);
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setEditingJurusan(null);
+    resetForm();
+  };
+
   const validateForm = () => {
     const newErrors = {};
     
@@ -76,29 +108,31 @@ const JurusanList = () => {
     }
     
     try {
-      // Call the API to create a new department
-      const response = await jurusanAPI.create(formData);
+      let response;
+      if (editingJurusan) {
+        // Update existing department
+        response = await jurusanAPI.update(formData);
+      } else {
+        // Create new department
+        response = await jurusanAPI.create(formData);
+      }
       
       if (response.data.success) {
         // Refresh the list
         fetchJurusan();
         
         // Reset form and close it
-        setFormData({
-          nama_jurusan: '',
-          kode_jurusan: '',
-          singkatan: '',
-          status: 'aktif'
-        });
+        resetForm();
+        setEditingJurusan(null);
         setShowForm(false);
         
-        alert('Jurusan berhasil ditambahkan!');
+        alert(editingJurusan ? 'Jurusan berhasil diperbarui!' : 'Jurusan berhasil ditambahkan!');
       } else {
-        throw new Error(response.data.message || 'Gagal menambahkan jurusan');
+        throw new Error(response.data.message || (editingJurusan ? 'Gagal memperbarui jurusan' : 'Gagal menambahkan jurusan'));
       }
     } catch (error) {
-      console.error('Error adding jurusan:', error);
-      alert(error.response?.data?.message || 'Gagal menambahkan jurusan. Silakan coba lagi.');
+      console.error('Error processing jurusan:', error);
+      alert(error.response?.data?.message || (editingJurusan ? 'Gagal memperbarui jurusan. Silakan coba lagi.' : 'Gagal menambahkan jurusan. Silakan coba lagi.'));
     }
   };
 
@@ -113,15 +147,19 @@ const JurusanList = () => {
           <h1 className="page-title">Data Jurusan</h1>
           <p className="page-subtitle">Daftar jurusan di SMK Rajasa Surabaya</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowForm(!showForm)}>
+        <button className="btn btn-primary" onClick={() => {
+          resetForm();
+          setEditingJurusan(null);
+          setShowForm(!showForm);
+        }}>
           <i className="fas fa-plus"></i>
-          Tambah Jurusan
+          {editingJurusan ? 'Batal' : 'Tambah Jurusan'}
         </button>
       </div>
 
       {showForm && (
         <div className="form-card">
-          <h3>Tambah Jurusan Baru</h3>
+          <h3>{editingJurusan ? 'Edit Jurusan' : 'Tambah Jurusan Baru'}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
@@ -163,6 +201,18 @@ const JurusanList = () => {
               </div>
               
               <div className="form-group">
+                <label>Ketua Jurusan</label>
+                <input
+                  type="text"
+                  name="ketua_jurusan"
+                  value={formData.ketua_jurusan}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            
+            <div className="form-row">
+              <div className="form-group">
                 <label>Status</label>
                 <select
                   name="status"
@@ -177,9 +227,9 @@ const JurusanList = () => {
             
             <div className="form-actions">
               <button type="submit" className="btn btn-primary">
-                Simpan
+                {editingJurusan ? 'Simpan Perubahan' : 'Simpan'}
               </button>
-              <button type="button" className="btn btn-secondary" onClick={() => setShowForm(false)}>
+              <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                 Batal
               </button>
             </div>
@@ -196,6 +246,7 @@ const JurusanList = () => {
             <div className="jurusan-content">
               <h3>{j.nama_jurusan}</h3>
               <p>Kode: {j.kode_jurusan}</p>
+              <p>Ketua: {j.ketua_jurusan || '-'}</p>
               <div className="jurusan-stats">
                 <div className="stat">
                   <i className="fas fa-user-graduate"></i>
@@ -209,6 +260,16 @@ const JurusanList = () => {
             </div>
             <div className={`jurusan-status ${j.status}`}>
               {j.status === 'aktif' ? 'Aktif' : 'Nonaktif'}
+            </div>
+            <div className="jurusan-actions">
+              <button 
+                className="btn btn-sm btn-outline" 
+                onClick={() => handleEditClick(j)}
+                title="Edit jurusan"
+              >
+                <i className="fas fa-edit"></i>
+                Edit
+              </button>
             </div>
           </div>
         ))}
