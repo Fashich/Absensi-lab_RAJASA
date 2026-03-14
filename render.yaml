@@ -1,0 +1,38 @@
+services:
+  # Backend Service (PHP API)
+  - type: web
+    name: absensi-backend
+    runtime: docker
+    region: singapore
+    plan: free
+    healthCheckPath: /api/auth/check_connection.php
+    buildCommand: ""
+    startCommand: |
+      # Aktifkan mod_rewrite
+      sed -ri 's/^#LoadModule rewrite_module/LoadModule rewrite_module/' /usr/local/apache2/conf/httpd.conf
+      httpd -D FOREGROUND
+    disk:  # Tambahkan disk untuk menyimpan file upload
+      name: uploads
+      mountPath: /var/www/html/uploads
+      sizeGB: 1
+
+  # Frontend Service (React App)
+  - type: web
+    name: absensi-frontend
+    runtime: static
+    region: singapore
+    plan: free
+    buildCommand: |
+      cd frontend && npm install && npm run build
+    envVars:
+      - key: REACT_APP_API_BASE_URL
+        fromService:
+          name: absensi-backend
+          type: web
+          property: url
+
+databases:
+  - name: absensi-db
+    region: singapore
+    plan: free
+    databaseName: absensi_db
