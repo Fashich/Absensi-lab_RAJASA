@@ -38,3 +38,4 @@ backend/config/database.php
 
 # Uploads folder (should be managed separately)
 backend/uploads/
+temp/
