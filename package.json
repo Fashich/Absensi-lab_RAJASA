@@ -1,16 +1,42 @@
 {
-  "name": "project_magang",
+  "name": "sistem-presensi-smk-rajasa",
   "version": "1.0.0",
-  "description": "Sistem absensi berbasis IoT (Internet of Things) untuk laboratorium komputer di SMK Rajasa Surabaya. Sistem ini mengintegrasikan teknologi ESP32-CAM dengan scanning kartu RFID untuk pendataan kehadiran siswa secara otomatis dan real-time.",
+  "description": "Sistem informasi laboratorium presensi berbasis web full-stack MVP yang production-ready untuk SMK Rajasa Surabaya dengan integrasi portal orang tua siswa dan sistem presensi lab yang sudah ada.",
   "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
+    "dev": "concurrently \"npm run frontend:dev\" \"npm run backend:dev\"",
+    "frontend:dev": "cd frontend && npm start",
+    "backend:dev": "cd backend && php -S localhost:3001",
+    "frontend:install": "cd frontend && npm install",
+    "backend:install": "echo 'Installing backend dependencies...'",
+    "install-all": "npm run frontend:install",
+    "build": "cd frontend && npm run build",
+    "start": "concurrently \"npm run frontend:start\" \"npm run backend:start\"",
+    "frontend:start": "cd frontend && npm start",
+    "backend:start": "cd backend && php -S localhost:3001",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[username]/sistem-presensi-smk-rajasa.git"
+  },
+  "keywords": [
+    "react",
+    "php",
+    "mysql",
+    "attendance-system",
+    "school-management",
+    "iot",
+    "smk-rajasa"
+  ],
+  "author": "Ahmad Fashich Azzuhri R.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/[username]/sistem-presensi-smk-rajasa/issues"
+  },
+  "homepage": "https://github.com/[username]/sistem-presensi-smk-rajasa#readme",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
   "type": "commonjs"
 }

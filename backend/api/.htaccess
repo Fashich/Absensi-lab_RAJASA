@@ -3,14 +3,20 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
-# Handle CORS
-Header always set Access-Control-Allow-Origin "*"
-Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+# Handle CORS - hanya tambahkan jika belum ada
+<IfModule mod_headers.c>
+    # Hanya set header CORS jika belum diatur sebelumnya
+    Header always set Access-Control-Allow-Origin "*" env=!CORS_HEADER_SET
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH" env=!CORS_HEADER_SET
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With" env=!CORS_HEADER_SET
+    
+    # Set variabel lingkungan setelah menambahkan header
+    RequestHeader set CORS_HEADER_SET "true"
+</IfModule>
 
 # Handle preflight OPTIONS request
 RewriteCond %{REQUEST_METHOD} OPTIONS
-RewriteRule ^(.*)$ $1 [R=200,L]
+RewriteRule ^(.*)$ $1 [R=200,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 # Semua request diarahkan ke index.php
 RewriteCond %{REQUEST_FILENAME} !-f

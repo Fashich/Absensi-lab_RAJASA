@@ -1,0 +1,390 @@
+/* =====================================================
+   WALI MURID LAYOUT — ParentDashboard.css
+   Matches reference screenshots (SMK Rajasa dark theme)
+   ===================================================== */
+
+/* ── CSS Variables ────────────────────────────────── */
+.wm-dark {
+  --wm-bg:          #0f172a;
+  --wm-sidebar-bg:  #1e293b;
+  --wm-header-bg:   #1e293b;
+  --wm-border:      #334155;
+  --wm-text:        #f1f5f9;
+  --wm-text-muted:  #94a3b8;
+  --wm-text-sub:    #64748b;
+  --wm-accent:      #3b82f6;
+  --wm-accent-hover:#2563eb;
+  --wm-active-bg:   #3b82f6;
+  --wm-active-text: #ffffff;
+  --wm-hover-bg:    #334155;
+  --wm-content-bg:  #0f172a;
+  --wm-card-bg:     #1e293b;
+}
+
+.wm-light {
+  --wm-bg:          #f8fafc;
+  --wm-sidebar-bg:  #1e293b;
+  --wm-header-bg:   #ffffff;
+  --wm-border:      #e2e8f0;
+  --wm-text:        #0f172a;
+  --wm-text-muted:  #64748b;
+  --wm-text-sub:    #94a3b8;
+  --wm-accent:      #3b82f6;
+  --wm-accent-hover:#2563eb;
+  --wm-active-bg:   #3b82f6;
+  --wm-active-text: #ffffff;
+  --wm-hover-bg:    #f1f5f9;
+  --wm-content-bg:  #f8fafc;
+  --wm-card-bg:     #ffffff;
+}
+
+/* ── Reset & Base ─────────────────────────────────── */
+* { box-sizing: border-box; }
+
+.wm-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--wm-bg);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 14px;
+}
+
+/* ── SIDEBAR ──────────────────────────────────────── */
+.wm-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: var(--wm-sidebar-bg);
+  border-right: 1px solid var(--wm-border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+/* Brand / Logo area */
+.wm-sidebar-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--wm-border);
+}
+
+.wm-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+.wm-school-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wm-school-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--wm-text);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.wm-address-short {
+  font-size: 10px;
+  color: var(--wm-text-muted);
+  line-height: 1.4;
+}
+
+.wm-address-toggle {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.wm-address-toggle:hover {
+  color: #93c5fd;
+}
+
+.wm-address-full {
+  font-size: 10px;
+  color: var(--wm-text-muted);
+  line-height: 1.5;
+  animation: wm-fadeIn 0.2s ease;
+}
+
+@keyframes wm-fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Sidebar navigation */
+.wm-sidebar-nav {
+  flex: 1;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.wm-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cbd5e1;
+  font-size: 13.5px;
+  font-weight: 400;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  border-radius: 0;
+}
+
+.wm-sidebar-item:hover {
+  background: var(--wm-hover-bg);
+  color: var(--wm-text);
+}
+
+.wm-sidebar-item--active {
+  background: var(--wm-active-bg) !important;
+  color: var(--wm-active-text) !important;
+  font-weight: 600;
+}
+
+.wm-sidebar-icon {
+  font-size: 15px;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── MAIN AREA ────────────────────────────────────── */
+.wm-main {
+  margin-left: 250px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOP HEADER ───────────────────────────────────── */
+.wm-header {
+  background: var(--wm-header-bg);
+  border-bottom: 1px solid var(--wm-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Header navigation tabs */
+.wm-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wm-header-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--wm-text-muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.wm-header-btn:hover {
+  background: var(--wm-hover-bg);
+  color: var(--wm-text);
+}
+
+.wm-header-btn--active {
+  background: var(--wm-active-bg) !important;
+  color: #ffffff !important;
+}
+
+.wm-header-icon {
+  font-size: 15px;
+}
+
+/* Header right section */
+.wm-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wm-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--wm-text-muted);
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.wm-icon-btn:hover {
+  background: var(--wm-hover-bg);
+}
+
+.wm-notif-btn {
+  position: relative;
+}
+
+.wm-notif-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #ef4444;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+/* User profile chip */
+.wm-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.wm-user-profile:hover {
+  background: var(--wm-hover-bg);
+}
+
+.wm-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wm-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wm-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--wm-text);
+  line-height: 1.2;
+}
+
+.wm-user-role {
+  font-size: 11px;
+  color: #60a5fa;
+  line-height: 1.2;
+}
+
+/* ── CONTENT AREA ─────────────────────────────────── */
+.wm-content {
+  flex: 1;
+  padding: 24px;
+  background: var(--wm-content-bg);
+  color: var(--wm-text);
+  overflow-y: auto;
+}
+
+/* ── Content page cards ───────────────────────────── */
+.wm-page-card {
+  background: var(--wm-card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--wm-border);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.wm-page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--wm-text);
+  margin: 0 0 4px;
+}
+
+.wm-page-subtitle {
+  font-size: 13px;
+  color: var(--wm-text-muted);
+  margin: 0;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .wm-sidebar {
+    width: 200px;
+  }
+
+  .wm-main {
+    margin-left: 200px;
+  }
+
+  .wm-header-btn span:last-child {
+    display: none;
+  }
+
+  .wm-user-info {
+    display: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .wm-sidebar {
+    display: none;
+  }
+
+  .wm-main {
+    margin-left: 0;
+  }
+}
+
+/* ── Legacy overrides (backward compat) ───────────── */
+.data-siswa-page,
+.pembayaran-spp-page {
+  background: transparent;
+  padding: 0;
+}

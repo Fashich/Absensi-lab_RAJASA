@@ -1,0 +1,253 @@
+/* Styling untuk komponen PembayaranSPP */
+.pembayaran-spp-page {
+  background-color: #0f172a; /* dark background */
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.pembayaran-spp-page .bg-white {
+  background-color: #1e293b !important; /* sidebar/header background */
+}
+
+.pembayaran-spp-page .text-gray-900 {
+  color: #f1f5f9 !important; /* primary text */
+}
+
+.pembayaran-spp-page .text-gray-500 {
+  color: #cbd5e1 !important; /* secondary text */
+}
+
+.pembayaran-spp-page .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #334155 !important; /* secondary region */
+}
+
+.pembayaran-spp-page .bg-gray-50 {
+  background-color: #334155 !important; /* secondary region */
+}
+
+.pembayaran-spp-page .bg-green-50 {
+  background-color: #16a34a !important;
+  color: #f1f5f9 !important;
+}
+
+.pembayaran-spp-page .text-green-800 {
+  color: #86efac !important;
+}
+
+.pembayaran-spp-page .dark\:bg-green-900\/30 {
+  background-color: rgba(22, 163, 74, 0.3) !important;
+}
+
+.pembayaran-spp-page .dark\:text-green-300 {
+  color: #86efac !important;
+}
+
+.pembayaran-spp-page .bg-red-50 {
+  background-color: #dc2626 !important;
+  color: #f1f5f9 !important;
+}
+
+.pembayaran-spp-page .text-red-800 {
+  color: #fca5a5 !important;
+}
+
+.pembayaran-spp-page .dark\:bg-red-900\/30 {
+  background-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+.pembayaran-spp-page .dark\:text-red-300 {
+  color: #fca5a5 !important;
+}
+
+.pembayaran-spp-page .dark\:bg-slate-700 {
+  background-color: #334155 !important;
+}
+
+.pembayaran-spp-page .dark\:bg-slate-800 {
+  background-color: #1e293b !important;
+}
+
+.pembayaran-spp-page .dark\:divide-slate-700 {
+  border-color: #334155 !important;
+}
+
+.pembayaran-spp-page .hover\:bg-gray-50 {
+  background-color: #334155 !important;
+}
+
+.pembayaran-spp-page .dark\:hover\:bg-slate-700\/50 {
+  background-color: rgba(51, 65, 85, 0.5) !important;
+}
+
+.pembayaran-spp-page .text-blue-600 {
+  color: #3b82f6 !important;
+}
+
+.pembayaran-spp-page .hover\:text-blue-900 {
+  color: #1d4ed8 !important;
+}
+
+.pembayaran-spp-page .dark\:text-blue-400 {
+  color: #93c5fd !important;
+}
+
+.pembayaran-spp-page .dark\:hover\:text-blue-300 {
+  color: #bfdbfe !important;
+}
+
+.pembayaran-spp-page .text-green-600 {
+  color: #16a34a !important;
+}
+
+.pembayaran-spp-page .hover\:text-green-900 {
+  color: #14532d !important;
+}
+
+.pembayaran-spp-page .dark\:text-green-400 {
+  color: #4ade80 !important;
+}
+
+.pembayaran-spp-page .dark\:hover\:text-green-300 {
+  color: #86efac !important;
+}
+
+.pembayaran-spp-page .text-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+
+.pembayaran-spp-page .text-xs {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+}
+
+.pembayaran-spp-page .uppercase {
+  text-transform: uppercase;
+}
+
+.pembayaran-spp-page .tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.pembayaran-spp-page .font-medium {
+  font-weight: 500;
+}
+
+.pembayaran-spp-page .min-w-full {
+  min-width: 100%;
+}
+
+.pembayaran-spp-page .divide-y > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px;
+}
+
+.pembayaran-spp-page .whitespace-nowrap {
+  white-space: nowrap;
+}
+
+.pembayaran-spp-page .px-6 {
+  padding-left: 1.5rem; /* 24px */
+  padding-right: 1.5rem; /* 24px */
+}
+
+.pembayaran-spp-page .py-3 {
+  padding-top: 0.75rem; /* 12px */
+  padding-bottom: 0.75rem; /* 12px */
+}
+
+.pembayaran-spp-page .py-4 {
+  padding-top: 1rem; /* 16px */
+  padding-bottom: 1rem; /* 16px */
+}
+
+.pembayaran-spp-page .text-left {
+  text-align: left;
+}
+
+/* Button styling */
+.pembayaran-spp-page .bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+.pembayaran-spp-page .hover\:bg-blue-600:hover {
+  background-color: #2563eb;
+}
+
+.pembayaran-spp-page .bg-green-500 {
+  background-color: #16a34a;
+}
+
+.pembayaran-spp-page .hover\:bg-green-600:hover {
+  background-color: #15803d;
+}
+
+.pembayaran-spp-page .bg-red-500 {
+  background-color: #dc2626;
+}
+
+.pembayaran-spp-page .hover\:bg-red-600:hover {
+  background-color: #b91c1c;
+}
+
+.pembayaran-spp-page .bg-orange-500 {
+  background-color: #ea580c;
+}
+
+.pembayaran-spp-page .hover\:bg-orange-600:hover {
+  background-color: #c2410c;
+}
+
+.pembayaran-spp-page .bg-emerald-500 {
+  background-color: #059669;
+}
+
+.pembayaran-spp-page .hover\:bg-emerald-600:hover {
+  background-color: #047857;
+}
+
+.pembayaran-spp-page .text-white {
+  color: white;
+}
+
+.pembayaran-spp-page .rounded-lg {
+  border-radius: 0.5rem; /* 8px */
+}
+
+.pembayaran-spp-page .px-4 {
+  padding-left: 1rem; /* 16px */
+  padding-right: 1rem; /* 16px */
+}
+
+.pembayaran-spp-page .py-2 {
+  padding-top: 0.5rem; /* 8px */
+  padding-bottom: 0.5rem; /* 8px */
+}
+
+.pembayaran-spp-page .space-x-1 > :not([hidden]) ~ :not([hidden]) {
+  margin-left: 0.25rem; /* 4px */
+}
+
+/* Table styling */
+.pembayaran-spp-page .min-w-full {
+  width: 100%;
+}
+
+.pembayaran-spp-page .border-separate {
+  border-collapse: separate;
+}
+
+.pembayaran-spp-page .border-spacing-0 {
+  border-spacing: 0;
+}
+
+.pembayaran-spp-page .divide-y > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
+}
+
+/* Overflow styling */
+.pembayaran-spp-page .overflow-x-auto {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

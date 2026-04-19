@@ -129,6 +129,17 @@ const Login = () => {
         </button>
       </form>
 
+      {/* Tombol untuk wali murid */}
+      <div className="wali-murid-button">
+        <button 
+          type="button" 
+          className="btn btn-secondary btn-wali-murid"
+          onClick={() => window.location.href = '/wali-murid/beranda/dashboard'}
+        >
+          <span>Masuk sebagai Wali Murid</span>
+        </button>
+      </div>
+
       {/* Bagian tambahan untuk tautan signup */}
       <div className="login-signup-link">
         <p>Belum punya akun? <a href="/signup">Daftar di sini</a></p>
